@@ -1,4 +1,3 @@
-script.js
 document.addEventListener('DOMContentLoaded', () => {
     createSudokuGrid();
     document.getElementById('solve-button').addEventListener('click', solveSudoku);
