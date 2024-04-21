@@ -1,6 +1,8 @@
+index.js
 document.addEventListener('DOMContentLoaded', () => {
     createSudokuGrid();
     document.getElementById('solve-button').addEventListener('click', solveSudoku);
+    document.getElementById('reset-button').addEventListener('click', resetSudoku);
 });
 
 function createSudokuGrid() {
@@ -9,6 +11,9 @@ function createSudokuGrid() {
         const input = document.createElement('input');
         input.type = 'text';
         input.classList.add('sudoku-cell');
+        input.addEventListener('input', function() {
+            this.value = this.value.replace(/[^1-9]/g, '');
+        });
         container.appendChild(input);
     }
 }
@@ -38,6 +43,20 @@ function updateSudokuGrid(grid) {
         input.classList.add('solved');
     });
 }
+
+function resetSudoku() {
+    const inputs = document.querySelectorAll('.sudoku-cell');
+    inputs.forEach(input => {
+        if (input.classList.contains('initial')) {
+            input.value = input.defaultValue;
+            input.classList.remove('solved');
+        } else {
+            input.value = '';
+            input.classList.remove('solved');
+        }
+    });
+}
+
 
 function solveSudokuHelper(grid) {
     const emptySpot = findEmptySpot(grid);
